@@ -13,6 +13,10 @@
   <artifactId>chapter3-thorntail</artifactId>
   <name>Chapter 3: Thorntail - Shopping Cart example</name>
   <packaging>war</packaging>
+  
+  <properties>
+    <docker.image.prefix>malogan82</docker.image.prefix>
+  </properties>
 
   <build>
     <finalName>chapter3</finalName>
@@ -39,6 +43,23 @@
               <goal>package</goal>
             </goals>
           </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>dockerfile-maven-plugin</artifactId>
+        <version>1.3.6</version>
+        <configuration>
+            <repository>${docker.image.prefix}/${project.artifactId}</repository>
+        </configuration>
+        <executions>
+            <execution>
+                <id>default</id>
+                <phase>package</phase>
+                <goals>
+                    <goal>build</goal>
+                </goals>
+            </execution>
         </executions>
       </plugin>
     </plugins>
